@@ -1,13 +1,14 @@
 'use client'
 import { useState } from 'react'
 import { action, action2 } from './action'
+import { runParallelAction } from './parallel-util'
 
 export function Cmp() {
 	const [timeRanAction, setTimeRanAction] = useState(0)
 	const [timeRanRoute, setTimeRanRoute] = useState(0)
 	const runAction = async () => {
 		const start = Date.now()
-		const promises = [action(), action2()]
+		const promises = [runParallelAction(action()), runParallelAction(action2())]
 		const res = await Promise.all(promises)
 		const end = Date.now()
 		setTimeRanAction(end - start)

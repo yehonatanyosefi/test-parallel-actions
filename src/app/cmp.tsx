@@ -17,14 +17,14 @@ export function Cmp() {
 		// Wrap each action in a function that logs when it starts
 		const wrappedAction1 = () => {
 			addLog('Action 1 triggered')
-			return action()
+			return runParallelAction(action())
 		}
 
 		const wrappedAction2 = () => {
 			addLog('Action 2 triggered')
-			return action2()
+			return runParallelAction(action2())
 		}
-		const promises = [runParallelAction(wrappedAction1()), runParallelAction(wrappedAction2())]
+		const promises = [wrappedAction1(), wrappedAction2()]
 
 		const res = await Promise.all(promises)
 		const end = Date.now()
